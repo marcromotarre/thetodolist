@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+}
+
+@layer components {
+  .search-input {
+    @apply mb-5 block w-60;
+  }
+  .info-width {
+    @apply sm:w-5/6 lg:w-max-app;
+  }
+}
+
+@layer utilities {
+  .grayer-out-disabled {
+    @apply disabled:opacity-50;
+  }
+}
