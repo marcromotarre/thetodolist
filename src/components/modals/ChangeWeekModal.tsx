@@ -11,6 +11,11 @@ import Typography from "../common/typography/Typography";
 export default function ChangeWeekModal({
   onClose = () => {},
 }: ComponentProps) {
+  function onClickDay(date?: Date) {
+    if (date) {
+      onClose(date);
+    } else onClose();
+  }
   return (
     <>
       <Modal onClose={onClose}>
@@ -18,7 +23,7 @@ export default function ChangeWeekModal({
         <Modal.Body>
           <div className="grid grid-cols-1 gap-y-2">
             <Typography>Select the week you want to see</Typography>
-            <Calendar />
+            <Calendar completed selection="week" onClick={onClickDay} />
           </div>
         </Modal.Body>
       </Modal>
@@ -27,5 +32,5 @@ export default function ChangeWeekModal({
 }
 
 type ComponentProps = {
-  onClose?: VoidFunction;
+  onClose?: (date?: Date) => VoidFunction;
 };

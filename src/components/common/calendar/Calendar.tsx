@@ -5,10 +5,14 @@ import { CalendarIcon, LeftIcon, RightIcon } from "../icons";
 
 export default function Calendar({
   date = new Date(),
-  completed = true,
+  completed = false,
+  selection = "day",
+  onClick = () => {},
 }: {
   date?: Date;
   completed?: boolean;
+  selection?: "day" | "week";
+  onClick?: (date?: Date) => void;
 }) {
   const currentDate = new Date();
   const [dateSelected, setSelectedDate] = useState(date);
@@ -52,6 +56,7 @@ export default function Calendar({
 
   function clickOnDay(date: Date) {
     setSelectedDate(date);
+    onClick(date);
   }
 
   let days = [
@@ -80,19 +85,15 @@ export default function Calendar({
     ...Array.from({ length: 42 - days.length }, (_, index) => {
       if (!completed) return null;
       const lastDay = datesThisMonth[datesThisMonth.length - 1];
-      console.log(lastDay, lastDay.getDay());
       const newDate = new Date(lastDay);
       newDate.setDate(newDate.getDate() + (index + 1));
-      console.log("--------------");
-
-      console.log("newDate", newDate);
-      console.log("---------------");
-
       return lastDay.getDay() !== 0 && index <= 6 - lastDay.getDay()
         ? newDate
         : null;
     }),
   ];
+
+  const weekD = weekDays(dateSelected);
 
   return (
     <div className="grid grid-cols-1 gap-y-4">
@@ -132,49 +133,56 @@ export default function Calendar({
         <Typography className="justify-self-center self-center aspect-square">
           S
         </Typography>
-        {days.map((day, index) => (
-          <>
-            {day ? (
-              <button
-                disabled={day.getMonth() !== monthSelected}
-                style={
-                  dateSelected.getMonth() === monthSelected &&
-                  dateSelected.getFullYear() === yearSelected &&
-                  dateSelected.getDate() === day.getDate() &&
-                  dateSelected.getMonth() === day.getMonth()
-                    ? {
-                        borderRadius: "100%",
-                        backgroundColor: "#266EF1",
-                        border: "1px solid #266EF1",
-                        width: "100%",
-                        color: "white",
-                      }
-                    : currentDate.getMonth() === monthSelected &&
-                      currentDate.getFullYear() === yearSelected &&
-                      currentDate.getDate() === day.getDate()
-                    ? {
-                        borderRadius: "100%",
-                        border: "1px solid #266EF1",
-                        width: "100%",
-                        color: "#266EF1",
-                      }
-                    : {
-                        width: "100%",
-                        color:
-                          day.getMonth() != monthSelected ? "#CCC" : "black",
-                      }
-                }
-                onClick={() => clickOnDay(day)}
-                key={`calendar-day-${day.getDate()}-${monthSelected}`}
-                className="justify-self-center self-center aspect-square"
-              >
-                {day.getDate()}
-              </button>
-            ) : (
-              <div key={`calendar-day-${index}`}></div>
-            )}
-          </>
-        ))}
+        {days.map((day, index) => {
+          return (
+            <>
+              {day ? (
+                <button
+                  disabled={day.getMonth() !== monthSelected}
+                  style={
+                    (selection == "day" &&
+                      dateSelected.getMonth() === monthSelected &&
+                      dateSelected.getFullYear() === yearSelected &&
+                      dateSelected.getDate() === day.getDate() &&
+                      dateSelected.getMonth() === day.getMonth()) ||
+                    (selection == "week" && isDayIncluded(weekD, day))
+                      ? {
+                          borderRadius: "100%",
+                          backgroundColor:
+                            dateSelected.getMonth() === day?.getMonth()
+                              ? "#266EF1"
+                              : "#CCC",
+                          border: "1px solid #266EF1",
+                          width: "100%",
+                          color: "white",
+                        }
+                      : currentDate.getMonth() === monthSelected &&
+                        currentDate.getFullYear() === yearSelected &&
+                        currentDate.getDate() === day.getDate()
+                      ? {
+                          borderRadius: "100%",
+                          border: "1px solid #266EF1",
+                          width: "100%",
+                          color: "#266EF1",
+                        }
+                      : {
+                          width: "100%",
+                          color:
+                            day.getMonth() != monthSelected ? "#CCC" : "black",
+                        }
+                  }
+                  onClick={() => clickOnDay(day)}
+                  key={`calendar-day-${day.getDate()}-${monthSelected}`}
+                  className="justify-self-center self-center aspect-square"
+                >
+                  {day.getDate()}
+                </button>
+              ) : (
+                <div key={`calendar-day-${index}`}></div>
+              )}
+            </>
+          );
+        })}
       </div>
     </div>
   );
@@ -196,13 +204,48 @@ function getDaysInMonth(month: number, year: number) {
   return days;
 }
 
-const getWeek = (date) => {
+const getWeek = (date: Date) => {
   const janFirst = new Date(date.getFullYear(), 0, 1);
   return Math.ceil(
     ((date.getTime() - janFirst.getTime()) / 86400000 + janFirst.getDay()) / 7,
   );
 };
 
-const isSameWeek = (dateA, dateB) => {
+const isSameWeek = (dateA: Date, dateB: Date) => {
   return getWeek(dateA) === getWeek(dateB);
 };
+
+function weekDays(date: Date): Date[] {
+  let _date = new Date(date);
+  var week = new Array();
+  // Starting Monday not Sunday
+  _date.setDate(
+    _date.getDay() == 0
+      ? _date.getDate() - 7 + 1
+      : _date.getDate() - _date.getDay() + 1,
+  );
+  for (var i = 0; i < 7; i++) {
+    week.push(new Date(_date));
+    _date.setDate(_date.getDate() + 1);
+  }
+  return week;
+}
+
+function isDayIncluded(days: Date[], day: Date) {
+  let found = false;
+  let a = day;
+  days.forEach((d) => {
+    if (isSameDay(d, day)) {
+      found = true;
+    }
+  });
+  return found;
+}
+
+function isSameDay(d1: Date, d2: Date) {
+  return (
+    d1.getDate() === d2.getDate() &&
+    d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth()
+  );
+}

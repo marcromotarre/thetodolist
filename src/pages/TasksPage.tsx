@@ -32,13 +32,18 @@ function convertHour(hour: number) {
   return `${hour}:00`;
 }
 
-function dates(current: Date): Date[] {
+function weekDays(date: Date): Date[] {
+  let _date = new Date(date);
   var week = new Array();
   // Starting Monday not Sunday
-  current.setDate(current.getDate() - current.getDay() + 1);
+  _date.setDate(
+    _date.getDay() == 0
+      ? _date.getDate() - 7 + 1
+      : _date.getDate() - _date.getDay() + 1,
+  );
   for (var i = 0; i < 7; i++) {
-    week.push(new Date(current));
-    current.setDate(current.getDate() + 1);
+    week.push(new Date(_date));
+    _date.setDate(_date.getDate() + 1);
   }
   return week;
 }
@@ -71,13 +76,15 @@ export default function TasksPage() {
     useState(false);
 
   const [isChangeWeekModalOpened, setIsChangeWeekModalOpened] = useState(false);
-  const week = dates(new Date());
+  const week = weekDays(selectedDay);
   const tasks = getTasksData(TasksData);
 
   const todayTasks = tasks.filter(
     (task: TaskType) =>
       new Date(task.start).toDateString() === selectedDay.toDateString(),
   );
+
+  console.log(selectedDay);
 
   return (
     <div className="grid grid-cols-1 gap-y-2 grid-rows-[50px_60px_calc(100vh_-_150px)]">
@@ -154,7 +161,14 @@ export default function TasksPage() {
         />
       )}
       {isChangeWeekModalOpened && (
-        <ChangeWeekModal onClose={() => setIsChangeWeekModalOpened(false)} />
+        <ChangeWeekModal
+          onClose={(date) => {
+            if (date) {
+              setSelectedDay(date);
+            }
+            setIsChangeWeekModalOpened(false);
+          }}
+        />
       )}
     </div>
   );
