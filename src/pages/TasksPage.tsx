@@ -7,6 +7,7 @@ import Alert from "../components/common/alert/Alert";
 import Button from "../components/common/button/Button";
 import { BackIcon, CalendarIcon, PlusIcon } from "../components/common/icons";
 import AddNewActivityModal from "../components/modals/AddNewActivityModal";
+import ChangeWeekModal from "../components/modals/ChangeWeekModal";
 
 const hours = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
@@ -68,6 +69,8 @@ export default function TasksPage() {
   const [selectedDay, setSelectedDay] = useState(new Date());
   const [isAddActivityModalOpened, setIsAddActivityModalOpened] =
     useState(false);
+
+  const [isChangeWeekModalOpened, setIsChangeWeekModalOpened] = useState(false);
   const week = dates(new Date());
   const tasks = getTasksData(TasksData);
 
@@ -82,6 +85,7 @@ export default function TasksPage() {
         <Button color="black" variant="text" startIcon={<BackIcon />}></Button>
         <Typography variant="h4">February</Typography>
         <Button
+          onClick={() => setIsChangeWeekModalOpened(true)}
           color="black"
           variant="text"
           startIcon={<CalendarIcon />}
@@ -97,7 +101,7 @@ export default function TasksPage() {
           />
         ))}
       </div>
-      <div className="overflow-y-scroll">
+      <div className="overflow-y-scroll grid grid-cols-1 gap-y-2">
         <Alert severity="info">You have 2 tasks pending to be completed</Alert>
         <div
           className="grid grid-cols-[auto_50px] gap-x-2"
@@ -148,6 +152,9 @@ export default function TasksPage() {
         <AddNewActivityModal
           onClose={() => setIsAddActivityModalOpened(false)}
         />
+      )}
+      {isChangeWeekModalOpened && (
+        <ChangeWeekModal onClose={() => setIsChangeWeekModalOpened(false)} />
       )}
     </div>
   );

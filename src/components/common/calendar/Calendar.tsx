@@ -3,7 +3,13 @@ import Button from "../button/Button";
 import Typography from "../typography/Typography";
 import { CalendarIcon, LeftIcon, RightIcon } from "../icons";
 
-export default function Calendar({ date = new Date() }: { date?: Date }) {
+export default function Calendar({
+  date = new Date(),
+  completed = true,
+}: {
+  date?: Date;
+  completed?: boolean;
+}) {
   const currentDate = new Date();
   const [dateSelected, setSelectedDate] = useState(date);
   const [monthSelected, setMonthSelected] = useState(date.getMonth());
@@ -48,9 +54,44 @@ export default function Calendar({ date = new Date() }: { date?: Date }) {
     setSelectedDate(date);
   }
 
-  const days = [
-    ...Array.from({ length: datesThisMonth[0].getDay() - 1 }, (_, i) => null),
+  let days = [
+    ...Array.from(
+      {
+        length:
+          datesThisMonth[0].getDay() == 0 ? 6 : datesThisMonth[0].getDay() - 1,
+      },
+      (_, index) => {
+        if (!completed) return null;
+        const newDate = new Date(datesThisMonth[0]);
+        newDate.setDate(
+          newDate.getDate() -
+            (datesThisMonth[0].getDay() == 0
+              ? 7 - 1 - index
+              : datesThisMonth[0].getDay() - 1 - index),
+        );
+        return newDate;
+      },
+    ),
     ...datesThisMonth,
+  ];
+
+  days = [
+    ...days,
+    ...Array.from({ length: 42 - days.length }, (_, index) => {
+      if (!completed) return null;
+      const lastDay = datesThisMonth[datesThisMonth.length - 1];
+      console.log(lastDay, lastDay.getDay());
+      const newDate = new Date(lastDay);
+      newDate.setDate(newDate.getDate() + (index + 1));
+      console.log("--------------");
+
+      console.log("newDate", newDate);
+      console.log("---------------");
+
+      return lastDay.getDay() !== 0 && index <= 6 - lastDay.getDay()
+        ? newDate
+        : null;
+    }),
   ];
 
   return (
@@ -95,10 +136,12 @@ export default function Calendar({ date = new Date() }: { date?: Date }) {
           <>
             {day ? (
               <button
+                disabled={day.getMonth() !== monthSelected}
                 style={
                   dateSelected.getMonth() === monthSelected &&
                   dateSelected.getFullYear() === yearSelected &&
-                  dateSelected.getDate() === day.getDate()
+                  dateSelected.getDate() === day.getDate() &&
+                  dateSelected.getMonth() === day.getMonth()
                     ? {
                         borderRadius: "100%",
                         backgroundColor: "#266EF1",
@@ -115,7 +158,11 @@ export default function Calendar({ date = new Date() }: { date?: Date }) {
                         width: "100%",
                         color: "#266EF1",
                       }
-                    : { width: "100%" }
+                    : {
+                        width: "100%",
+                        color:
+                          day.getMonth() != monthSelected ? "#CCC" : "black",
+                      }
                 }
                 onClick={() => clickOnDay(day)}
                 key={`calendar-day-${day.getDate()}-${monthSelected}`}
@@ -145,5 +192,17 @@ function getDaysInMonth(month: number, year: number) {
     days.push(new Date(date));
     date.setDate(date.getDate() + 1);
   }
+
   return days;
 }
+
+const getWeek = (date) => {
+  const janFirst = new Date(date.getFullYear(), 0, 1);
+  return Math.ceil(
+    ((date.getTime() - janFirst.getTime()) / 86400000 + janFirst.getDay()) / 7,
+  );
+};
+
+const isSameWeek = (dateA, dateB) => {
+  return getWeek(dateA) === getWeek(dateB);
+};
