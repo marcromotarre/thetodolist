@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import TasksPage from "./pages/TasksPage";
 import DefaultLayout from "./pages/layouts/DefaultLayout";
+import DashboardPage from "./pages/DashboardPage";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Routes>
         <Route element={<DefaultLayout />}>
           <Route path="/tasks" element={<TasksPage />} />
+          <Route path="/" element={<DashboardPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

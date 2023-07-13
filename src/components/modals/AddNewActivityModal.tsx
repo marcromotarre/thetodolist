@@ -37,6 +37,11 @@ export default function AddNewActivityModal({
             </div>
           </div>
         </Modal.Body>
+        <Modal.Footer>
+          <div className="flex justify-end">
+            <Button size="small">Create</Button>
+          </div>
+        </Modal.Footer>
       </Modal>
     </>
   );
