@@ -9,12 +9,12 @@
     "title": "Call with Julia from Talent",
     "start": "Thu Jul 13 2023 12:00:00 GMT+0200 (hora de verano de Europa central)",
     "end": "Thu Jul 13 2023 13:00:00 GMT+0200 (hora de verano de Europa central)",
-    "category": "telephone"
+    "category": "call"
   },
   {
     "title": "Call with Paloma from Emburse",
     "start": "Thu Jul 13 2023 15:00:00 GMT+0200 (hora de verano de Europa central)",
     "end": "Thu Jul 13 2023 17:00:00 GMT+0200 (hora de verano de Europa central)",
-    "category": "telephone"
+    "category": "call"
   }
 ]

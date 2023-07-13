@@ -2,6 +2,7 @@ import Typography from "../components/common/Typography";
 import Styles from "../types/style";
 import TasksData from "../data/tasks.json";
 import { useState } from "react";
+import categories, { CategoryTypes } from "../data/categories";
 
 const hours = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
@@ -41,14 +42,14 @@ type TaskType = {
   start: Date;
   end: Date;
   title: string;
-  category: string;
+  category: CategoryTypes;
 };
 
 type TaskJsonType = {
   start: string;
   end: string;
   title: string;
-  category: string;
+  category: CategoryTypes;
 };
 
 function getTasksData(tasksJsonData: TaskJsonType[]): TaskType[] {
@@ -80,6 +81,7 @@ export default function TasksPage() {
             key={`calendar-day-${weekdayString[weekDay.getDay()]}`}
             weekDay={weekdayString[weekDay.getDay()]}
             dayNumber={weekDay.getDate()}
+            selected={selectedDay.toDateString() === weekDay.toDateString()}
           />
         ))}
       </div>
@@ -111,7 +113,7 @@ export default function TasksPage() {
                 gridArea: `task-${startHour} /task-${startHour} / task-${endHour} / task-${endHour}`,
               }}
             >
-              <Task style={{ width: "100%", height: "100%" }} />
+              <Task {...task} style={{ width: "100%", height: "100%" }} />
             </div>
           );
         })}
@@ -123,23 +125,50 @@ export default function TasksPage() {
 function CalendarDay({
   weekDay,
   dayNumber,
+  selected = false,
 }: {
+  selected?: boolean;
   weekDay: string;
   dayNumber: number;
 }) {
   console.log(weekDay);
   return (
-    <div className="flex justify-center items-center flex-wrap flex-col">
+    <button
+      style={{
+        backgroundColor: selected ? "#266EF1" : "transparent",
+        color: selected ? "white" : "black",
+      }}
+      className="flex justify-center items-center flex-wrap flex-col p-2 rounded-md min-w-[40px]"
+    >
       <Typography className="capitalize">{weekDay.slice(0, 3)}</Typography>
       <Typography>{`${dayNumber}`}</Typography>
-    </div>
+    </button>
   );
 }
 
-function Task({ style = {} }: { style?: Styles }) {
+function Task({
+  title,
+  category,
+  style = {},
+}: {
+  title: string;
+  category?: CategoryTypes;
+  style?: Styles;
+}) {
   return (
-    <div style={style} className="bg-white rounded-md">
-      <Typography>Computer</Typography>
+    <div style={style} className="bg-white rounded-md p-2">
+      <div className="flex items-center">
+        {category && (
+          <div
+            style={{ backgroundColor: categories[category].backgroundColor }}
+            className="p-2 w-fit h-fit rounded-md mr-2"
+          >
+            {categories[category].icon}
+          </div>
+        )}
+
+        <Typography variant="body1">{title}</Typography>
+      </div>
     </div>
   );
 }
