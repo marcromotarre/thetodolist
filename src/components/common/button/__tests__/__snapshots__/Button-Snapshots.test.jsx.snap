@@ -1,0 +1,397 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renders correct color button 1`] = `
+<DocumentFragment>
+  <button
+    class="flex h-fit w-max items-center justify-center bg-transparent hover:bg-white hover:brightness-95 p-3 rounded-md"
+    data-testid="button"
+    style="background-color: red;"
+  >
+    <div
+      class="flex items-center justify-center"
+      data-testid="button-content"
+    >
+      <svg
+        class=""
+        data-testid="rectangle-icon"
+        fill="none"
+        height="20"
+        viewBox="0 0 72 72"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="black"
+          height="72"
+          width="72"
+        />
+      </svg>
+      <span
+        class="ml-2 mr-2 sm:text-xs md:text-sm lg:text-sm uppercase font-medium "
+        data-testid="typography-span"
+        style="font-size: 0.875rem;"
+      >
+        Contained Button
+      </span>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`renders correct endIcon text button 1`] = `
+<DocumentFragment>
+  <button
+    class="flex h-fit w-max items-center justify-center bg-transparent hover:bg-white hover:brightness-95 p-3 rounded-md"
+    data-testid="button"
+    style="background-color: rgb(96 165 250);"
+  >
+    <div
+      class="flex items-center justify-center"
+      data-testid="button-content"
+    >
+      <span
+        class="ml-2 mr-2 sm:text-xs md:text-sm lg:text-sm uppercase font-medium "
+        data-testid="typography-span"
+        style="color: white; font-size: 0.875rem;"
+      >
+        TextButton
+      </span>
+      <svg
+        class=""
+        data-testid="rectangle-icon"
+        fill="none"
+        height="20"
+        viewBox="0 0 72 72"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="white"
+          height="72"
+          width="72"
+        />
+      </svg>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`renders correct icon button 1`] = `
+<DocumentFragment>
+  <button
+    class="flex h-fit w-max items-center justify-center bg-transparent hover:bg-white hover:brightness-95 p-3 rounded-md"
+    data-testid="button"
+    style="background-color: rgb(96 165 250);"
+  >
+    <div
+      class="flex items-center justify-center"
+      data-testid="button-content"
+    >
+      <svg
+        class=""
+        data-testid="rectangle-icon"
+        fill="none"
+        height="20"
+        viewBox="0 0 72 72"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="white"
+          height="72"
+          width="72"
+        />
+      </svg>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`renders correct large button 1`] = `
+<DocumentFragment>
+  <button
+    class="flex h-fit w-max items-center justify-center bg-transparent hover:bg-white hover:brightness-95 p-4 rounded-md"
+    data-testid="button"
+    style="background-color: rgb(96 165 250);"
+  >
+    <div
+      class="flex items-center justify-center"
+      data-testid="button-content"
+    >
+      <svg
+        class=""
+        data-testid="rectangle-icon"
+        fill="none"
+        height="25"
+        viewBox="0 0 72 72"
+        width="25"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="white"
+          height="72"
+          width="72"
+        />
+      </svg>
+      <span
+        class="ml-2 mr-2 sm:text-xs md:text-sm lg:text-sm uppercase font-medium "
+        data-testid="typography-span"
+        style="color: white; font-size: 1.25rem;"
+      >
+        Large Button
+      </span>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`renders correct medium button 1`] = `
+<DocumentFragment>
+  <button
+    class="flex h-fit w-max items-center justify-center bg-transparent hover:bg-white hover:brightness-95 p-3 rounded-md"
+    data-testid="button"
+    style="background-color: rgb(96 165 250);"
+  >
+    <div
+      class="flex items-center justify-center"
+      data-testid="button-content"
+    >
+      <svg
+        class=""
+        data-testid="rectangle-icon"
+        fill="none"
+        height="20"
+        viewBox="0 0 72 72"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="white"
+          height="72"
+          width="72"
+        />
+      </svg>
+      <span
+        class="ml-2 mr-2 sm:text-xs md:text-sm lg:text-sm uppercase font-medium "
+        data-testid="typography-span"
+        style="color: white; font-size: 0.875rem;"
+      >
+        Medium Button
+      </span>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`renders correct small button 1`] = `
+<DocumentFragment>
+  <button
+    class="flex h-fit w-max items-center justify-center bg-transparent hover:bg-white hover:brightness-95 p-2 rounded-md"
+    data-testid="button"
+    style="background-color: rgb(96 165 250);"
+  >
+    <div
+      class="flex items-center justify-center"
+      data-testid="button-content"
+    >
+      <svg
+        class=""
+        data-testid="rectangle-icon"
+        fill="none"
+        height="15"
+        viewBox="0 0 72 72"
+        width="15"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="white"
+          height="72"
+          width="72"
+        />
+      </svg>
+      <span
+        class="ml-2 mr-2 sm:text-xs md:text-sm lg:text-sm uppercase font-medium "
+        data-testid="typography-span"
+        style="color: white; font-size: 0.7rem;"
+      >
+        Small Button
+      </span>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`renders correct startIcon text button 1`] = `
+<DocumentFragment>
+  <button
+    class="flex h-fit w-max items-center justify-center bg-transparent hover:bg-white hover:brightness-95 p-3 rounded-md"
+    data-testid="button"
+    style="background-color: rgb(96 165 250);"
+  >
+    <div
+      class="flex items-center justify-center"
+      data-testid="button-content"
+    >
+      <svg
+        class=""
+        data-testid="rectangle-icon"
+        fill="none"
+        height="20"
+        viewBox="0 0 72 72"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="white"
+          height="72"
+          width="72"
+        />
+      </svg>
+      <span
+        class="ml-2 mr-2 sm:text-xs md:text-sm lg:text-sm uppercase font-medium "
+        data-testid="typography-span"
+        style="color: white; font-size: 0.875rem;"
+      >
+        TextButton
+      </span>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`renders correct text button 1`] = `
+<DocumentFragment>
+  <button
+    class="flex h-fit w-max items-center justify-center bg-transparent hover:bg-white hover:brightness-95 p-3 rounded-md"
+    data-testid="button"
+    style="background-color: rgb(96 165 250);"
+  >
+    <div
+      class="flex items-center justify-center"
+      data-testid="button-content"
+    >
+      <span
+        class="ml-2 mr-2 sm:text-xs md:text-sm lg:text-sm uppercase font-medium "
+        data-testid="typography-span"
+        style="color: white; font-size: 0.875rem;"
+      >
+        TextButton
+      </span>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`renders correct text contained button 1`] = `
+<DocumentFragment>
+  <button
+    class="flex h-fit w-max items-center justify-center bg-transparent hover:bg-white hover:brightness-95 p-3 rounded-md"
+    data-testid="button"
+    style="background-color: rgb(96 165 250);"
+  >
+    <div
+      class="flex items-center justify-center"
+      data-testid="button-content"
+    >
+      <svg
+        class=""
+        data-testid="rectangle-icon"
+        fill="none"
+        height="20"
+        viewBox="0 0 72 72"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="white"
+          height="72"
+          width="72"
+        />
+      </svg>
+      <span
+        class="ml-2 mr-2 sm:text-xs md:text-sm lg:text-sm uppercase font-medium "
+        data-testid="typography-span"
+        style="color: white; font-size: 0.875rem;"
+      >
+        Contained Button
+      </span>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`renders correct text outlined button 1`] = `
+<DocumentFragment>
+  <button
+    class="flex h-fit w-max items-center justify-center bg-transparent hover:bg-white hover:brightness-95 p-3 rounded-md"
+    data-testid="button"
+    style="background-color: transparent;"
+  >
+    <div
+      class="flex items-center justify-center"
+      data-testid="button-content"
+    >
+      <svg
+        class=""
+        data-testid="rectangle-icon"
+        fill="none"
+        height="20"
+        viewBox="0 0 72 72"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="rgb(96 165 250)"
+          height="72"
+          width="72"
+        />
+      </svg>
+      <span
+        class="ml-2 mr-2 sm:text-xs md:text-sm lg:text-sm uppercase font-medium "
+        data-testid="typography-span"
+        style="color: rgb(96 165 250); font-size: 0.875rem;"
+      >
+        Contained Button
+      </span>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`renders correct text variant button 1`] = `
+<DocumentFragment>
+  <button
+    class="flex h-fit w-max items-center justify-center bg-transparent hover:bg-white hover:brightness-95 p-3 rounded-md"
+    data-testid="button"
+    style="background-color: transparent;"
+  >
+    <div
+      class="flex items-center justify-center"
+      data-testid="button-content"
+    >
+      <svg
+        class=""
+        data-testid="rectangle-icon"
+        fill="none"
+        height="20"
+        viewBox="0 0 72 72"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="rgb(96 165 250)"
+          height="72"
+          width="72"
+        />
+      </svg>
+      <span
+        class="ml-2 mr-2 sm:text-xs md:text-sm lg:text-sm uppercase font-medium "
+        data-testid="typography-span"
+        style="color: rgb(96 165 250); font-size: 0.875rem;"
+      >
+        Large Button
+      </span>
+    </div>
+  </button>
+</DocumentFragment>
+`;

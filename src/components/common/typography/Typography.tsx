@@ -1,7 +1,7 @@
 import { ReactElement, createElement } from "react";
-import Styles from "../../types/style";
+import Styles from "../../../types/style";
 import TYPOGRAPHY_DATA from "./TypographyData";
-import { FontType } from "./types/TypographyType";
+import { FontType } from "../types/TypographyType";
 
 const Typography = ({
   variant = "body1",

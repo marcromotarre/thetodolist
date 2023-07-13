@@ -1,8 +1,12 @@
-import Typography from "../components/common/Typography";
+import Typography from "../components/common/typography/Typography";
 import Styles from "../types/style";
 import TasksData from "../data/tasks.json";
 import { useState } from "react";
 import categories, { CategoryTypes } from "../data/categories";
+import Alert from "../components/common/alert/Alert";
+import Button from "../components/common/button/Button";
+import { PlusIcon } from "../components/common/icons";
+import AddNewActivityModal from "../components/modals/AddNewActivityModal";
 
 const hours = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
@@ -62,6 +66,8 @@ function getTasksData(tasksJsonData: TaskJsonType[]): TaskType[] {
 
 export default function TasksPage() {
   const [selectedDay, setSelectedDay] = useState(new Date());
+  const [isAddActivityModalOpened, setIsAddActivityModalOpened] =
+    useState(false);
   const week = dates(new Date());
   const tasks = getTasksData(TasksData);
 
@@ -71,22 +77,22 @@ export default function TasksPage() {
   );
 
   return (
-    <div className="grid grid-cols-1 gap-y-2">
+    <div className="grid grid-cols-1 gap-y-2 grid-rows-[50px_60px_auto]">
       <div className="flex justify-center items-center">
         <Typography variant="h4">February</Typography>
       </div>
       <div className="flex justify-between">
         {week.map((weekDay) => (
           <CalendarDay
+            onClick={(date: Date) => setSelectedDay(date)}
             key={`calendar-day-${weekdayString[weekDay.getDay()]}`}
-            weekDay={weekdayString[weekDay.getDay()]}
-            dayNumber={weekDay.getDate()}
+            date={weekDay}
             selected={selectedDay.toDateString() === weekDay.toDateString()}
           />
         ))}
       </div>
       <div
-        className="grid grid-cols-[auto_50px]"
+        className="grid grid-cols-[auto_50px] gap-x-2 h-[100%] overflow-y-scroll"
         style={{
           gridTemplateAreas: AREAS,
           gridTemplateRows: `repeat(${hours.length}, 80px)`,
@@ -110,7 +116,9 @@ export default function TasksPage() {
               key={`${task.title}_${startHour}_${endHour}`}
               className="p-2"
               style={{
-                gridArea: `task-${startHour} /task-${startHour} / task-${endHour} / task-${endHour}`,
+                gridArea: `task-${startHour} /task-${startHour} / task-${
+                  endHour - 1
+                } / task-${endHour - 1}`,
               }}
             >
               <Task {...task} style={{ width: "100%", height: "100%" }} />
@@ -118,30 +126,45 @@ export default function TasksPage() {
           );
         })}
       </div>
+      <div className="fixed bottom-4 object-center left-[25%]">
+        <Button
+          onClick={() => setIsAddActivityModalOpened(true)}
+          startIcon={<PlusIcon />}
+        >
+          Add new Activity
+        </Button>
+      </div>
+      {isAddActivityModalOpened && (
+        <AddNewActivityModal
+          onClose={() => setIsAddActivityModalOpened(false)}
+        />
+      )}
     </div>
   );
 }
 
 function CalendarDay({
-  weekDay,
-  dayNumber,
+  date,
   selected = false,
+  onClick = () => {},
 }: {
   selected?: boolean;
-  weekDay: string;
-  dayNumber: number;
+  date: Date;
+  onClick: (date: Date) => void;
 }) {
-  console.log(weekDay);
   return (
     <button
+      onClick={() => onClick(date)}
       style={{
         backgroundColor: selected ? "#266EF1" : "transparent",
         color: selected ? "white" : "black",
       }}
       className="flex justify-center items-center flex-wrap flex-col p-2 rounded-md min-w-[40px]"
     >
-      <Typography className="capitalize">{weekDay.slice(0, 3)}</Typography>
-      <Typography>{`${dayNumber}`}</Typography>
+      <Typography className="capitalize">
+        {weekdayString[date.getDay()].slice(0, 3)}
+      </Typography>
+      <Typography>{`${date.getDate()}`}</Typography>
     </button>
   );
 }
