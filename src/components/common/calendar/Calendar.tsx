@@ -3,22 +3,49 @@ import Button from "../button/Button";
 import Typography from "../typography/Typography";
 import { CalendarIcon, LeftIcon, RightIcon } from "../icons";
 
-export default function Calendar() {
-  const [daySelected, setDaySelected] = useState(13);
-  const [monthSelected, setMonthSelected] = useState(6);
-  const [yearSelected, setYearSelected] = useState(2023);
+export default function Calendar({ date = new Date() }: { date?: Date }) {
+  const currentDate = new Date();
+  const [dateSelected, setSelectedDate] = useState(date);
+  const [monthSelected, setMonthSelected] = useState(date.getMonth());
+  const [yearSelected, setYearSelected] = useState(date.getFullYear());
 
   const datesThisMonth = getDaysInMonth(monthSelected, yearSelected);
 
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   function goToPreviousMonth() {
-    if (monthSelected - 1 < 1) {
-      setMonthSelected(12);
+    if (monthSelected - 1 < 0) {
+      setMonthSelected(11);
       setYearSelected(yearSelected - 1);
-    } else setMonthSelected(monthSelected - 1);
+    } else {
+      setMonthSelected(monthSelected - 1);
+    }
   }
 
   function goToNextMonth() {
-    setMonthSelected(monthSelected + 1);
+    if (monthSelected + 1 > 11) {
+      setMonthSelected(0);
+      setYearSelected(yearSelected + 1);
+    } else {
+      setMonthSelected(monthSelected + 1);
+    }
+  }
+
+  function clickOnDay(date: Date) {
+    setSelectedDate(date);
   }
 
   const days = [
@@ -26,11 +53,10 @@ export default function Calendar() {
     ...datesThisMonth,
   ];
 
-  console.log(days);
   return (
     <div className="grid grid-cols-1 gap-y-4">
       <div className="flex justify-between">
-        <Typography variant="h6">{`${monthSelected} ${yearSelected}`}</Typography>
+        <Typography variant="h6">{`${months[monthSelected]} ${yearSelected}`}</Typography>
         <div className="grid grid-cols-[30px_30px] gap-x-2">
           <button onClick={() => goToPreviousMonth()}>
             <LeftIcon size={12} color="#555555" />
@@ -65,14 +91,40 @@ export default function Calendar() {
         <Typography className="justify-self-center self-center aspect-square">
           S
         </Typography>
-        {days.map((day) => (
+        {days.map((day, index) => (
           <>
             {day ? (
-              <button className="justify-self-center self-center aspect-square">
+              <button
+                style={
+                  dateSelected.getMonth() === monthSelected &&
+                  dateSelected.getFullYear() === yearSelected &&
+                  dateSelected.getDate() === day.getDate()
+                    ? {
+                        borderRadius: "100%",
+                        backgroundColor: "#266EF1",
+                        border: "1px solid #266EF1",
+                        width: "100%",
+                        color: "white",
+                      }
+                    : currentDate.getMonth() === monthSelected &&
+                      currentDate.getFullYear() === yearSelected &&
+                      currentDate.getDate() === day.getDate()
+                    ? {
+                        borderRadius: "100%",
+                        border: "1px solid #266EF1",
+                        width: "100%",
+                        color: "#266EF1",
+                      }
+                    : { width: "100%" }
+                }
+                onClick={() => clickOnDay(day)}
+                key={`calendar-day-${day.getDate()}-${monthSelected}`}
+                className="justify-self-center self-center aspect-square"
+              >
                 {day.getDate()}
               </button>
             ) : (
-              <div></div>
+              <div key={`calendar-day-${index}`}></div>
             )}
           </>
         ))}

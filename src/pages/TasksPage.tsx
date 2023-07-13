@@ -5,7 +5,7 @@ import { useState } from "react";
 import categories, { CategoryTypes } from "../data/categories";
 import Alert from "../components/common/alert/Alert";
 import Button from "../components/common/button/Button";
-import { PlusIcon } from "../components/common/icons";
+import { BackIcon, CalendarIcon, PlusIcon } from "../components/common/icons";
 import AddNewActivityModal from "../components/modals/AddNewActivityModal";
 
 const hours = [
@@ -77,9 +77,15 @@ export default function TasksPage() {
   );
 
   return (
-    <div className="grid grid-cols-1 gap-y-2 grid-rows-[50px_60px_auto]">
-      <div className="flex justify-center items-center">
+    <div className="grid grid-cols-1 gap-y-2 grid-rows-[50px_60px_calc(100vh_-_150px)]">
+      <div className="flex justify-between items-center">
+        <Button color="black" variant="text" startIcon={<BackIcon />}></Button>
         <Typography variant="h4">February</Typography>
+        <Button
+          color="black"
+          variant="text"
+          startIcon={<CalendarIcon />}
+        ></Button>
       </div>
       <div className="flex justify-between">
         {week.map((weekDay) => (
@@ -91,41 +97,45 @@ export default function TasksPage() {
           />
         ))}
       </div>
-      <div
-        className="grid grid-cols-[auto_50px] gap-x-2 h-[100%] overflow-y-scroll"
-        style={{
-          gridTemplateAreas: AREAS,
-          gridTemplateRows: `repeat(${hours.length}, 80px)`,
-        }}
-      >
-        {hours.map((hour) => (
-          <div
-            key={`tasks_time_${hour}`}
-            style={{ gridArea: `hour-${hour}` }}
-            className="w-full h-full"
-          >
-            <Typography variant="body1">{convertHour(hour)}</Typography>
-          </div>
-        ))}
-
-        {todayTasks.map((task) => {
-          const startHour = task.start.getHours();
-          const endHour = task.end.getHours();
-          return (
+      <div className="overflow-y-scroll">
+        <Alert severity="info">You have 2 tasks pending to be completed</Alert>
+        <div
+          className="grid grid-cols-[auto_50px] gap-x-2"
+          style={{
+            gridTemplateAreas: AREAS,
+            gridTemplateRows: `repeat(${hours.length}, 80px)`,
+          }}
+        >
+          {hours.map((hour) => (
             <div
-              key={`${task.title}_${startHour}_${endHour}`}
-              className="p-2"
-              style={{
-                gridArea: `task-${startHour} /task-${startHour} / task-${
-                  endHour - 1
-                } / task-${endHour - 1}`,
-              }}
+              key={`tasks_time_${hour}`}
+              style={{ gridArea: `hour-${hour}` }}
+              className="w-full h-full"
             >
-              <Task {...task} style={{ width: "100%", height: "100%" }} />
+              <Typography variant="body1">{convertHour(hour)}</Typography>
             </div>
-          );
-        })}
+          ))}
+
+          {todayTasks.map((task) => {
+            const startHour = task.start.getHours();
+            const endHour = task.end.getHours();
+            return (
+              <div
+                key={`${task.title}_${startHour}_${endHour}`}
+                className="p-2"
+                style={{
+                  gridArea: `task-${startHour} /task-${startHour} / task-${
+                    endHour - 1
+                  } / task-${endHour - 1}`,
+                }}
+              >
+                <Task {...task} style={{ width: "100%", height: "100%" }} />
+              </div>
+            );
+          })}
+        </div>
       </div>
+
       <div className="fixed bottom-4 object-center left-[25%]">
         <Button
           onClick={() => setIsAddActivityModalOpened(true)}
