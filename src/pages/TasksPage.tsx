@@ -8,6 +8,8 @@ import Button from "../components/common/button/Button";
 import { BackIcon, CalendarIcon, PlusIcon } from "../components/common/icons";
 import AddNewActivityModal from "../components/modals/AddNewActivityModal";
 import ChangeWeekModal from "../components/modals/ChangeWeekModal";
+import { usePageNavigationContext } from "../providers/PageNavigationProvider";
+import { useNavigate } from "react-router-dom";
 
 const hours = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
@@ -84,13 +86,45 @@ export default function TasksPage() {
       new Date(task.start).toDateString() === selectedDay.toDateString(),
   );
 
-  console.log(selectedDay);
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const { lastPage, goBack, reset } = usePageNavigationContext();
+  const navigate = useNavigate();
+
+  function goBackNavigation() {
+    if (lastPage) {
+      const _lastPage = lastPage;
+      goBack();
+      navigate(_lastPage);
+    } else {
+      reset();
+      navigate("/");
+    }
+  }
 
   return (
     <div className="grid grid-cols-1 gap-y-2 grid-rows-[50px_60px_calc(100vh_-_150px)]">
       <div className="flex justify-between items-center">
-        <Button color="black" variant="text" startIcon={<BackIcon />}></Button>
-        <Typography variant="h4">February</Typography>
+        <Button
+          onClick={() => goBackNavigation()}
+          color="black"
+          variant="text"
+          startIcon={<BackIcon />}
+        ></Button>
+        <Typography variant="h4">{months[selectedDay.getMonth()]}</Typography>
         <Button
           onClick={() => setIsChangeWeekModalOpened(true)}
           color="black"
