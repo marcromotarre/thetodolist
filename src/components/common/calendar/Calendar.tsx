@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../button/Button";
 import Typography from "../typography/Typography";
 import { CalendarIcon, LeftIcon, RightIcon } from "../icons";
+import { months } from "./utils/date";
 
 export default function Calendar({
   date = new Date(),
@@ -20,21 +21,6 @@ export default function Calendar({
   const [yearSelected, setYearSelected] = useState(date.getFullYear());
 
   const datesThisMonth = getDaysInMonth(monthSelected, yearSelected);
-
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
 
   function goToPreviousMonth() {
     if (monthSelected - 1 < 0) {

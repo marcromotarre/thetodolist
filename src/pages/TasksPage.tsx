@@ -1,6 +1,5 @@
 import Typography from "../components/common/typography/Typography";
 import Styles from "../types/style";
-import TasksData from "../data/tasks.json";
 import { useState } from "react";
 import categories, { CategoryTypes } from "../data/categories";
 import Alert from "../components/common/alert/Alert";
@@ -10,6 +9,8 @@ import AddNewActivityModal from "../components/modals/AddNewActivityModal";
 import ChangeWeekModal from "../components/modals/ChangeWeekModal";
 import { usePageNavigationContext } from "../providers/PageNavigationProvider";
 import { useNavigate } from "react-router-dom";
+import { convertHour, months } from "../components/common/calendar/utils/date";
+import { useTasksContext } from "../providers/TasksProvider";
 
 const hours = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
@@ -29,11 +30,6 @@ weekdayString[4] = "Thursday";
 weekdayString[5] = "Friday";
 weekdayString[6] = "Saturday";
 
-function convertHour(hour: number) {
-  if (hour < 10) return `0${hour}:00`;
-  return `${hour}:00`;
-}
-
 function weekDays(date: Date): Date[] {
   let _date = new Date(date);
   var week = new Array();
@@ -50,59 +46,23 @@ function weekDays(date: Date): Date[] {
   return week;
 }
 
-type TaskType = {
-  start: Date;
-  end: Date;
-  title: string;
-  category: CategoryTypes;
-};
-
-type TaskJsonType = {
-  start: string;
-  end: string;
-  title: string;
-  category: CategoryTypes;
-};
-
-function getTasksData(tasksJsonData: TaskJsonType[]): TaskType[] {
-  return tasksJsonData.map((task) => ({
-    ...task,
-    start: new Date(Date.parse(task.start)),
-    end: new Date(Date.parse(task.end)),
-  }));
-}
-
 export default function TasksPage() {
+  const { lastPage, goBack, go, reset } = usePageNavigationContext();
+  const navigate = useNavigate();
+
   const [selectedDay, setSelectedDay] = useState(new Date());
   const [isAddActivityModalOpened, setIsAddActivityModalOpened] =
     useState(false);
 
   const [isChangeWeekModalOpened, setIsChangeWeekModalOpened] = useState(false);
   const week = weekDays(selectedDay);
-  const tasks = getTasksData(TasksData);
+
+  const { tasks } = useTasksContext();
 
   const todayTasks = tasks.filter(
-    (task: TaskType) =>
+    (task) =>
       new Date(task.start).toDateString() === selectedDay.toDateString(),
   );
-
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  const { lastPage, goBack, reset } = usePageNavigationContext();
-  const navigate = useNavigate();
 
   function goBackNavigation() {
     if (lastPage) {
@@ -183,17 +143,16 @@ export default function TasksPage() {
 
       <div className="fixed bottom-4 object-center left-[25%]">
         <Button
-          onClick={() => setIsAddActivityModalOpened(true)}
+          onClick={() => {
+            go("/tasks");
+            navigate("/task/create");
+          }}
           startIcon={<PlusIcon />}
         >
           Add new Activity
         </Button>
       </div>
-      {isAddActivityModalOpened && (
-        <AddNewActivityModal
-          onClose={() => setIsAddActivityModalOpened(false)}
-        />
-      )}
+
       {isChangeWeekModalOpened && (
         <ChangeWeekModal
           onClose={(date) => {

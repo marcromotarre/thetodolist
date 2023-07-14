@@ -1,5 +1,6 @@
 [
   {
+    "id": "44031273-6bf9-b101-3948-2f31cd92b501",
     "title": "Start Task",
     "start": "Wed Jul 12 2023 12:00:00 GMT+0200 (hora de verano de Europa central)",
     "end": "Wed Jul 12 2023 13:00:00 GMT+0200 (hora de verano de Europa central)",
@@ -7,6 +8,7 @@
     "completed": true
   },
   {
+    "id": "44031273-6bf9-b101-3948-2f31cd92b545",
     "title": "Call with Julia from Talent",
     "start": "Thu Jul 13 2023 12:00:00 GMT+0200 (hora de verano de Europa central)",
     "end": "Thu Jul 13 2023 13:00:00 GMT+0200 (hora de verano de Europa central)",
@@ -14,10 +16,19 @@
     "completed": true
   },
   {
+    "id": "44031273-6bf9-b101-3948-2f31cd92b531",
     "title": "Call with Paloma from Emburse",
     "start": "Thu Jul 13 2023 15:00:00 GMT+0200 (hora de verano de Europa central)",
     "end": "Thu Jul 13 2023 17:00:00 GMT+0200 (hora de verano de Europa central)",
     "category": "call",
+    "completed": false
+  },
+  {
+    "id": "44031273-6bf9-b101-3948-2f31cd92b581",
+    "title": "Prepare Interview",
+    "start": "Thu Jul 14 2023 01:00:00 GMT+0200 (hora de verano de Europa central)",
+    "end": "Thu Jul 14 2023 04:00:00 GMT+0200 (hora de verano de Europa central)",
+    "category": "computer",
     "completed": false
   }
 ]

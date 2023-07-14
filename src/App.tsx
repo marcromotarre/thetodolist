@@ -5,6 +5,7 @@ import DefaultLayout from "./pages/layouts/DefaultLayout";
 import DashboardPage from "./pages/DashboardPage";
 import { PageNavigationProvider } from "./providers/PageNavigationProvider";
 import { TasksProvider } from "./providers/TasksProvider";
+import CreateTaskPage from "./pages/CreateTaskPage";
 
 function App() {
   return (
@@ -13,8 +14,9 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route element={<DefaultLayout />}>
-              <Route path="/tasks" element={<TasksPage />} />
               <Route path="/" element={<DashboardPage />} />
+              <Route path="/tasks" element={<TasksPage />} />
+              <Route path="/task/create" element={<CreateTaskPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
