@@ -4,18 +4,21 @@ import TasksPage from "./pages/TasksPage";
 import DefaultLayout from "./pages/layouts/DefaultLayout";
 import DashboardPage from "./pages/DashboardPage";
 import { PageNavigationProvider } from "./providers/PageNavigationProvider";
+import { TasksProvider } from "./providers/TasksProvider";
 
 function App() {
   return (
     <PageNavigationProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<DefaultLayout />}>
-            <Route path="/tasks" element={<TasksPage />} />
-            <Route path="/" element={<DashboardPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <TasksProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<DefaultLayout />}>
+              <Route path="/tasks" element={<TasksPage />} />
+              <Route path="/" element={<DashboardPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </TasksProvider>
     </PageNavigationProvider>
   );
 }
